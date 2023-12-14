@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from .models import Post
 from .serializers import PostSerializer
+# from .tasks import test_task1
 
 
 class OthersPosts(APIView):
@@ -40,3 +41,10 @@ class MyPosts(APIView):
     def delete(self, request, pk):
         Post.objects.get(id=pk, user=request.user.profile).delete()
         return Response({'msg': 'deleted'})
+
+
+# class TestCelery(APIView):
+#     def post(self, request):
+#         be_done_at = request.data['be_done_at']
+#         test_task1.apply_async(eta=be_done_at)
+#         return Response({'msg': 'ok'})
