@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_fsm import transition, FSMField
+from .constants import TicketState
 
 
 class Profile(models.Model):
@@ -42,3 +44,30 @@ class DirectMessages(models.Model):
 
     def __str__(self):
         return f'{self.id}'
+
+
+class Ticket(models.Model):
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='tickets')
+    message = models.TextField()
+    answer = models.TextField(null=True, blank=True)
+    state = FSMField(choices=TicketState.choices, default=TicketState.CREATED, protected=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name_plural = 'تیکت ها'
+
+    def __str__(self):
+        return f'{self.id}'
+
+    @transition(field=state,
+                source=TicketState.CREATED,
+                target=TicketState.PENDING)
+    def created_to_pending(self):
+        pass
+
+    @transition(field=state,
+                source=TicketState.PENDING,
+                target=TicketState.ANSWERED)
+    def pending_to_answered(self):
+        pass

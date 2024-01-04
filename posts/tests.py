@@ -11,11 +11,11 @@ class TestPost(TestCase):
     def setUp(self):
         self.user = baker.make('auth.User')
         self.profile = baker.make('users.Profile', user=self.user)
-        self.post = baker.make(Post, title='title_one')
+        self.post = baker.make(Post, title='title_one', _quantity=2)
 
     def test_one(self):
         post_count = Post.objects.all().count()
-        self.assertEqual(post_count, 1)
+        self.assertEqual(post_count, 2)
 
     def test_other_posts(self):
         url = reverse("others-posts")

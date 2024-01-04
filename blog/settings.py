@@ -154,3 +154,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # # CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
 # CELERY_RESULT_BACKEND = 'django-db'
 # CELERY_TIMEZONE = 'Asia/Tehran'
+
+from django.utils.translation import gettext_lazy as _
+import os
+
+LANGUAGES = [
+    ('fa', _('Persian')),
+    ('ar', _('Arabic')),
+]
+LANGUAGE_CODE = 'fa'
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
