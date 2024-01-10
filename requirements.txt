@@ -28,7 +28,7 @@ kombu==5.3.4
 model-bakery==1.17.0
 msgpack==0.6.2
 prompt-toolkit==3.0.41
-psycopg2==2.9.9
+psycopg2-binary==2.9.9
 pyasn1==0.5.1
 pyasn1-modules==0.3.0
 pycparser==2.21
