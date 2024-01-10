@@ -23,7 +23,8 @@ class Search(APIView):
 class OthersPosts(APIView):
 
     def get(self, request):
-        posts = Post.objects.annotate(likes_count=Count('likes'))
+        posts = Post.objects.all().only('title','text')
+        posts = Post.objects.annotate(likes_count=Count('likes')).filter(likes_count__gte=1)
         views_average = Post.objects.aggregate(views_avg=Avg('views'))
         data = PostSerializer(posts, many=True).data
         return Response(data)
